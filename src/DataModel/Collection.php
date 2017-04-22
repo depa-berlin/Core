@@ -4,9 +4,9 @@
  */
 namespace Depa\Core\DataModel;
 
-use depaLiebraries\Core\Interfaces\NullObject;
+use Depa\Core\Interfaces\IsNull;
 
-class Collection implements \IteratorAggregate, \Countable
+class Collection implements \IteratorAggregate, \Countable, IsNull
 {
     /*
      * 

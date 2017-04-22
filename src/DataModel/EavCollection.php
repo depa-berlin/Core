@@ -1,9 +1,9 @@
 <?php
-namespace depaLibraries\Core\DataModel;
+namespace Depa\Core\DataModel;
 
-use depaLibraries\Core\Collection\AbstractObjectCollection;
+use Depa\Core\Collection\AbstractCollection;
 
-class EavCollection extends AbstractObjectCollection
+class EavCollection extends AbstractCollection
 {
     /**
      * Status wird noch nicht verwendet

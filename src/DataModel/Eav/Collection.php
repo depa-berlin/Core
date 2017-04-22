@@ -1,4 +1,6 @@
 <?php
+use Depa\Core\DataModel\Eav\AttributeObject;
+
 /**
  * Die Abstrakte Kollektionsklasse, welche allen Klassen die Funktionalität 
  * einer Sammlung schenkt, die Sie einbinden.
@@ -74,10 +76,10 @@ class Core_Model_Eav_Collection implements IteratorAggregate, Countable
     /**
      * Füge einen Eintrag hinzu
      *
-     * @param   Shopingo_Model_Core_AttributeObject $item
-     * @return  Shopingo_Model_Core_Collection
+     * @param   AttributeObject $item
+     * @return  Collection
      */
-    public function addItem (Core_Model_Eav_AttributeObject  $item)
+    public function addItem (AttributeObject $item)
     {
         $itemId = $this->getItemId($item);
         if (! is_null($itemId))
@@ -116,7 +118,7 @@ class Core_Model_Eav_Collection implements IteratorAggregate, Countable
      * @param Shopingo_Model_Core_AttributeObject $item
      * @return mixed
      */
-    protected function getItemId (Core_Model_Eav_AttributeObject $item)
+    protected function getItemId (AttributeObject $item)
     {
         return $item->getId();
     }

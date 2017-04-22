@@ -5,7 +5,7 @@
  * 
  * 
  */
-namespace depaLibraries\Core\DataModel\Eav\Filter;
+namespace Depa\Core\DataModel\Eav\Filter;
 
 use Zend;
 

@@ -6,7 +6,7 @@ use Zend\Db\TableGateway\Feature\RowGatewayFeature;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
 use Zend\Db\Adapter\AdapterInterface;
-use Core\Model\ActiveRecord\Api\Exception;
+use Depa\Core\Model\ActiveRecord\Api\Exception;
 
 
 /**

@@ -1,5 +1,5 @@
 <?php
-namespace depaLiebraries\Core\DataModel\ActiveRecord;
+namespace Depa\Core\DataModel\ActiveRecord;
 
 class ActiveRelation extends Relation
 {
@@ -7,7 +7,7 @@ class ActiveRelation extends Relation
     
     protected $relatedLink;
     
-    public function __construct(\Core\Model\ActiveRecord $primaryRecord, $relatedModel, $link, $relatedLink)
+    public function __construct(ActiveRecord $primaryRecord, $relatedModel, $link, $relatedLink)
     {
         $this->relatedLink = $relatedLink;
         $relatedModel::setAdapter($primaryRecord::getAdapter());

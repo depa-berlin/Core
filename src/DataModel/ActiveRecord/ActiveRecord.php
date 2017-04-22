@@ -1,10 +1,10 @@
 <?php
-namespace depaLibraries\Core\DataModel\ActiveRecord;
+namespace Depa\Core\DataModel\ActiveRecord;
 
 use Zend\Db\RowGateway\AbstractRowGateway;
 use Zend\Db\Sql\Sql;
-use depaLibraries\Core\DataModel\ActiveRecord\DatabasePersistenceTrait;
-use depaLibraries\Core\DataModel\ActiveRecord\Exception;
+use Depa\Core\DataModel\ActiveRecord\DatabasePersistenceTrait;
+use Depa\Core\DataModel\ActiveRecord;
 
 /**
  * Stellt einen ActiveRecord dar, erweitert die Funktionalität des RowGateways.
@@ -180,7 +180,7 @@ class ActiveRecord extends AbstractRowGateway
         }
         if (! isset(self::$_validator))
         {
-            self::$_validator = new ActiveRecord\Validator();
+            self::$_validator = new Validator();
         }
         $valid = true;
         

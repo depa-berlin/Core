@@ -1,5 +1,5 @@
 <?php
-namespace depaLiebraries\Core\DataModel\ActiveRecord\Api;
+namespace dDepa\Core\DataModel\ActiveRecord\Api;
 
 class Exception extends \Exception
 {   

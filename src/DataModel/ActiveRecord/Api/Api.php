@@ -1,5 +1,5 @@
 <?php
-namespace depaLiebraries\Core\DataModel\ActiveRecord\Api;
+namespace Depa\Core\DataModel\ActiveRecord\Api;
 
 
 class Api extends \Core\Api\AbstractApi

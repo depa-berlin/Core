@@ -1,5 +1,5 @@
 <?php
-namespace depaLiebraries\Core\DataModel\ActiveRecord;
+namespace Depa\Core\DataModel\ActiveRecord;
 
 /**
  * Einfache Klasse um Attribute eines ActiveRecords zu validieren.

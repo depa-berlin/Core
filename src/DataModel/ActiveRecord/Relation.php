@@ -1,5 +1,5 @@
 <?php
-namespace depaLiebraries\Core\DataModel\ActiveRecord;
+namespace Depa\Core\DataModel\ActiveRecord;
 
 class Relation
 {
@@ -13,7 +13,7 @@ class Relation
     
     protected $relatedModel;
     
-    public function __construct(\Core\Model\ActiveRecord $primaryRecord, $relatedModel, $link)
+    public function __construct(ActiveRecord $primaryRecord, $relatedModel, $link)
     {
         $this->primaryRecord = $primaryRecord;
         if (!class_exists($relatedModel))

@@ -6,7 +6,7 @@
  * Es wird die Grundfunktionalität für das Abfragen eines Daten-Array implementiert
  * Hier werden alle Werte zu ihren Attributen in einem Array aufbewahrt. 
  */
-namespace depaLibraries\Core\DataModel\Eav;
+namespace Depa\Core\DataModel\Eav;
 
 abstract class AttributeObject
 {

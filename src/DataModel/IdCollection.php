@@ -2,7 +2,7 @@
 /**
  * 
  */
-namespace depaLibraries\Core\DataModel;
+namespace Depa\Core\DataModel;
 
 abstract class IdCollection extends Collection
 {

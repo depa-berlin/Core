@@ -1,6 +1,6 @@
 <?php
 
-namespace depaLiebraries\Core\DataModel\ActiveRecord;
+namespace Depa\Core\DataModel\ActiveRecord;
 
 use Zend\Db\TableGateway\Feature\RowGatewayFeature;
 use Zend\Db\TableGateway\TableGateway;

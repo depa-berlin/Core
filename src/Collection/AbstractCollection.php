@@ -5,7 +5,7 @@ use Depa\Core\Interfaces\Arrayable;
 use Depa\Core\Interfaces\Jsonable;
 
 /**
- *
+ * sfdg
  * @author fenrich
  *        
  */
@@ -13,7 +13,7 @@ class AbstractCollection implements \ArrayAccess, Arrayable, \Countable, \Iterat
 {
 
     /**
-     * The items contained in the collection.
+     * Die Items der Collection
      *
      * @var array
      */
@@ -80,9 +80,36 @@ class AbstractCollection implements \ArrayAccess, Arrayable, \Countable, \Iterat
         
         return $default;
     }
+    /**
+     * Gibt das erste Item der Collection zurück
+     * 
+     * @return mixed|NULL
+     */
+    public function getFirst()
+    {
+        if ($this->count())
+        {
+            reset($this->items);
+            return current($this->items);
+        }
+        return NULL;
+    }
+    /**
+     * Gibt das letzte Item der Collection zurück.
+     * 
+     * @return mixed|NULL
+     */
+    public function getLast()
+    {
+        if ($this->count())
+        {
+            return end($this->items);
+        }
+        return NULL;
+    }
 
     /**
-     * Determine if an item exists in the collection by key.
+     * Ermittelt in der Collection ein Item anhand des Key.
      *
      * @param mixed $key            
      * @return bool
@@ -93,7 +120,7 @@ class AbstractCollection implements \ArrayAccess, Arrayable, \Countable, \Iterat
     }
 
     /**
-     * Determine if the collection is empty or not.
+     * Ermittelt, ob die Collection leer ist  oder nicht.
      *
      * @return bool
      */
@@ -103,7 +130,7 @@ class AbstractCollection implements \ArrayAccess, Arrayable, \Countable, \Iterat
     }
     
     /**
-     * Get one or more items randomly from the collection.
+     * Gibt ein oder mehrere Items zufällig zurück.
      *
      * @param int $amount
      * @return mixed
@@ -153,7 +180,7 @@ class AbstractCollection implements \ArrayAccess, Arrayable, \Countable, \Iterat
     }
 
     /**
-     * Prüft, ob ein Item existiert.
+     * Prüft, ob ein bestimmtes Item existiert.
      *
      * @see ArrayAccess::offsetExists()
      * @param mixed $key            
@@ -165,7 +192,7 @@ class AbstractCollection implements \ArrayAccess, Arrayable, \Countable, \Iterat
     }
 
     /**
-     * Unset the item at a given offset.
+     * Entferne ein Item anhand des übergebenen Key
      *
      * @see ArrayAccess::offsetUnset()
      * @param string $key            
@@ -177,7 +204,7 @@ class AbstractCollection implements \ArrayAccess, Arrayable, \Countable, \Iterat
     }
 
     /**
-     * Set the item at a given offset.
+     * Setze ein Item für den übergebenen Key.
      *
      * @see ArrayAccess::offsetSet()
      * @param mixed $key            
@@ -211,7 +238,7 @@ class AbstractCollection implements \ArrayAccess, Arrayable, \Countable, \Iterat
     }
 
     /**
-     * Holt ein Iterator für die Items.
+     * Gibt den Iterator für Items der Collection zurück.
      *
      * @see IteratorAggregate::getIterator()
      * @return \ArrayIterator
@@ -277,6 +304,16 @@ class AbstractCollection implements \ArrayAccess, Arrayable, \Countable, \Iterat
         }
         
         return (array) $items;
+    }
+    
+    /**
+     * Convert the collection to its string representation.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toJson();
     }
 }
 

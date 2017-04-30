@@ -4,7 +4,7 @@ namespace Depa\Core\DataModel\ActiveRecord;
 use Zend\Db\RowGateway\AbstractRowGateway;
 use Zend\Db\Sql\Sql;
 use Depa\Core\DataModel\ActiveRecord\DatabasePersistenceTrait;
-use Depa\Core\DataModel\ActiveRecord;
+
 
 /**
  * Stellt einen ActiveRecord dar, erweitert die Funktionalität des RowGateways.

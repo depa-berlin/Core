@@ -5,9 +5,9 @@
  * 
  * 
  */
-namespace depaLibraries\Core\DataModel\Eav\Filter;
+namespace Depa\Core\DataModel\Eav\Filter;
 
-use Zend;
+use Zend\Filter\StaticFilter;
 
 class HtmlEntities
 {
@@ -18,8 +18,8 @@ class HtmlEntities
 
     public function filter ($value)
     {
-        $value = Zend\Filter\StaticFilter::execute($value, 'StringTrim');
-        $value = Zend\Filter\StaticFilter::execute($value, 'HtmlEntities');
+        $value = StaticFilter::execute($value, 'StringTrim');
+        $value = StaticFilter::execute($value, 'HtmlEntities');
         return $value;
     }
 }

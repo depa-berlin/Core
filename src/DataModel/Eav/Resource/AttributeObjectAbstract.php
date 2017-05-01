@@ -1,8 +1,8 @@
 <?php
-namespace Core\Model\Eav\Resource;
+namespace Depa\Core\Model\Eav\Resource;
 
-use depaLibraries\Core\Singleton;
-use depaLibraries\Core\DataModel as DataModel;
+use Depa\Core\Singleton;
+use Depa\Core\DataModel as DataModel;
 
 class AttributeObjectAbstract extends Singleton
 {

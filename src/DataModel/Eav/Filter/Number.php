@@ -5,9 +5,9 @@
  * 
  * 
  */
-namespace depaLibraries\Core\DataModel\Eav\Filter;
+namespace Depa\Core\DataModel\Eav\Filter;
 
-use Zend;
+use Zend\Filter\StaticFilter;
 
 class Core_Eav_Filter_Number
 {
@@ -18,7 +18,7 @@ class Core_Eav_Filter_Number
 
     public function filter ($value)
     {
-        $value = Zend\Filter\StaticFilter::execute($value, 'Int');
+        $value = StaticFilter::execute($value, 'Int');
         return $value;
     }
 }

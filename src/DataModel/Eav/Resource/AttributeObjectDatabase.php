@@ -7,10 +7,9 @@
  * greifen auf die Funktionalität dieses Objektes zurück
  *
  */
-namespace Core\Model\Eav\Resource;
+namespace Depa\Core\Model\Eav\Resource;
 
-use Core;
-use Core\Model as Model;
+use Depa\Core\DataModel as DataModel;
 
 class AttributeObjectDatabase extends AttributeObjectAbstract
 {
@@ -50,7 +49,7 @@ class AttributeObjectDatabase extends AttributeObjectAbstract
     {
         if (self::$instance === NULL)
         {
-            self::$instance = new Model\Eav\Resource\AttributeObjectDatabase($databaseConnection);
+            self::$instance = new DataModel\Eav\Resource\AttributeObjectDatabase($databaseConnection);
         }
         return self::$instance;
     }
@@ -62,7 +61,7 @@ class AttributeObjectDatabase extends AttributeObjectAbstract
      * @param $entityId
      * @return mixed $result
      */
-    public function checkEntityId(Model\EavAttributeHandler $object, $entityId)
+    public function checkEntityId(DataModel\EavAttributeHandler $object, $entityId)
     {
         $query = 'SELECT '.$object->idFieldName.'
         		  FROM '.$object->modelName.'
@@ -77,7 +76,7 @@ class AttributeObjectDatabase extends AttributeObjectAbstract
      * @param Core_Eav_AttributeHandler $object
      * @return array
      */
-    public function load (Model\EavAttributeHandler $object)
+    public function load (DataModel\EavAttributeHandler $object)
     {
         // http://www.1keydata.com/sql/sql-coalesce.html
         // SELECT mod_shopingo_customer_attribute.name, COALESCE( mod_shopingo_customer_value.value_varchar, mod_shopingo_customer_value.value_int ) AS value
@@ -100,7 +99,7 @@ class AttributeObjectDatabase extends AttributeObjectAbstract
      * 
      * @param Core_Eav_AttributeHandler $object
      */
-    public function delete (Model\EavAttributeHandler $object)
+    public function delete (DataModel\EavAttributeHandler $object)
     {
         $query = 'DELETE 
         		  FROM ' . $object->modelName . '
@@ -133,7 +132,7 @@ class AttributeObjectDatabase extends AttributeObjectAbstract
      * @param string $key
      * @param string $value
      */
-    public function insertValue (Model\EavAttributeHandler $object, $key, $value)
+    public function insertValue (DataModel\EavAttributeHandler $object, $key, $value)
     {
         $insertDataArray = array(
         'entity_id' => $object->getId(), 
@@ -147,7 +146,7 @@ class AttributeObjectDatabase extends AttributeObjectAbstract
      * 
      * @param Core_Eav_AttributeHandler $object
      */
-    public function insertNewEntity(Model\EavAttributeHandler $object)
+    public function insertNewEntity(DataModel\EavAttributeHandler $object)
     {
         $parentIdFieldName = $object->getParentIdFieldName();
         $parentIdValue = $object->getParentId();
@@ -175,7 +174,7 @@ class AttributeObjectDatabase extends AttributeObjectAbstract
      * @param Core_Eav_AttributeHandler $object
      * @param string $key
      */
-    public function deleteValue (Model\EavAttributeHandler $object, $key)
+    public function deleteValue (DataModel\EavAttributeHandler $object, $key)
     {
         $query = 'DELETE
 	    		  FROM ' . $object->modelName . '_value
@@ -192,7 +191,7 @@ class AttributeObjectDatabase extends AttributeObjectAbstract
      * @param string $key
      * @param string $value
      */
-    public function updateValue (Model\EavAttributeHandler $object, $key, $value)
+    public function updateValue (DataModel\EavAttributeHandler $object, $key, $value)
     {
         $data = array('value_' . $object->attributes[$key]['valuetype'] => $value);
         $where['attribute_id = ?'] = $object->attributes[$key]['attribute_id'];
@@ -207,7 +206,7 @@ class AttributeObjectDatabase extends AttributeObjectAbstract
      * @param string $childTableName
      * @param string $childIdFieldName
      */
-    public function getChildIds(Model\EavAttributeHandler $object, $childTableName, $childIdFieldName)
+    public function getChildIds(DataModel\EavAttributeHandler $object, $childTableName, $childIdFieldName)
     {
         $query = 'SELECT '.$childIdFieldName.'
         		  FROM '.$childTableName.'

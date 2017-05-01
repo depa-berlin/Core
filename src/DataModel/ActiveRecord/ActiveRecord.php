@@ -90,7 +90,7 @@ class ActiveRecord extends AbstractRowGateway
         {
             return null;
         }
-        throw new ActiveRecord\Exception('Undefined Attribute! Trying to get '.get_called_class().' - '.$name);
+        throw new Exception('Undefined Attribute! Trying to get '.get_called_class().' - '.$name);
     }
     /**
      * Fügt Attributsüberprüfung zu RowGateway hinzu.
@@ -102,7 +102,7 @@ class ActiveRecord extends AbstractRowGateway
     {
         if (!$this->hasAttribute($name))
         {
-            throw new ActiveRecord\Exception('Undefined Attribute! Trying to set '.$name);
+            throw new Exception('Undefined Attribute! Trying to set '.$name);
         }
         parent::__set($name, $value);
         if (!in_array($name, $this->dirtyAttributes))
@@ -171,7 +171,7 @@ class ActiveRecord extends AbstractRowGateway
     {
         if (count($rules) < 1)
         {
-            throw new ActiveRecord\Exception('Missing rule/s to validate attribute!');
+            throw new Exception('Missing rule/s to validate attribute!');
         }
         
         if (array_key_exists('type', $rules))
@@ -225,7 +225,7 @@ class ActiveRecord extends AbstractRowGateway
         $this->relations = array();
         foreach ($relations as $relationName => $relation)
         {
-            $this->relations[$relationName] = new ActiveRecord\ActiveRelation($this, $relation['model'], $relation['link'], $relation['relatedLink']);
+            $this->relations[$relationName] = new ActiveRelation($this, $relation['model'], $relation['link'], $relation['relatedLink']);
         }
     }
     

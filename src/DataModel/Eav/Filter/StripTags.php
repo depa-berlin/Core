@@ -5,9 +5,9 @@
  * 
  * 
  */
-namespace depaLibraries\Core\DataModel\Eav\Filter;
+namespace Depa\Core\DataModel\Eav\Filter;
 
-use Zend;
+use Zend\Filter\StaticFilter;
 
 class StripTags
 {
@@ -19,8 +19,8 @@ class StripTags
     {
         //TODO: hier könnte man ausnahmen aus einer Config laden und diese angeben
         
-        $value = Zend\Filter\StaticFilter::execute($value, 'StripTags');
-        $value = Zend\Filter\StaticFilter::execute($value, 'Null');
+        $value = StaticFilter::execute($value, 'StripTags');
+        $value = StaticFilter::execute($value, 'Null');
         return $value;
     }    
 }

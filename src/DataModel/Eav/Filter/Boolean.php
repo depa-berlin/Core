@@ -7,7 +7,7 @@
  */
 namespace Depa\Core\DataModel\Eav\Filter;
 
-use Zend;
+use Zend\Filter\StaticFilter;
 
 class Boolean
 {
@@ -18,7 +18,8 @@ class Boolean
 
     public function filter ($value)
     {
-        $value = Zend\Filter\StaticFilter::execute($value, 'Boolean');
+        
+        $value = StaticFilter::execute($value, 'Boolean'); 
         return $value;
     }
 }

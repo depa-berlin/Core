@@ -5,9 +5,9 @@
  * 
  * 
  */
-namespace depaLibraries\Core\DataModel\Eav;
+namespace Depa\Core\DataModel\Eav;
 
-use depaLibraries\Core\DataModel\Eav\Filter;
+
 
 class Filter
 {

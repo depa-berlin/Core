@@ -1,13 +1,13 @@
 <?php
-namespace depaLibraries\Core\DataModel;
+namespace Depa\Core\DataModel\Eav;
 
-use depaLibraries\Core\DataModel as Model;
+
 /**
  * @author mirkofenrich
  * Die Klasse stellt die Grundfunktionalitäten zur Verfügung die man brauch
  * um Daten zu laden, zu speichern und zu löschen
  */
-abstract class EavAttributeHandler extends Model\Eav\AttributeObject
+abstract class EavAttributeHandler extends AttributeObject
 {
     /**
      * Name des verwendenden Models
@@ -195,7 +195,7 @@ abstract class EavAttributeHandler extends Model\Eav\AttributeObject
         //neuen DataArray in foreach durchlaufen und werte mit altem DataArray vergleichen
         foreach ($this->data as $attribute => $value)
         {
-            $value = Model\Eav\Filter::factory($this->attributes[$attribute]['filter'], $value);
+            $value = Filter::factory($this->attributes[$attribute]['filter'], $value);
             //TODO: evtl überprüfen ob Wert nach Filter anders und nur dann data überschreiben?
             $this->data[$attribute] = $value;
             if (! array_key_exists($attribute, $this->originalData))
@@ -278,7 +278,7 @@ abstract class EavAttributeHandler extends Model\Eav\AttributeObject
      * 
      * @param unknown_type $eav
      */
-    public function copyEav (Model\EavAttributeHandler $eav)
+    public function copyEav (EavAttributeHandler $eav)
     {
         foreach ($this->attributes as $key => $value)
         {

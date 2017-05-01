@@ -1,8 +1,8 @@
 <?php
-namespace Core\Model\Eav\Resource;
+namespace Depa\Core\Model\Eav\Resource;
 
-use Core;
-use Core\Model as Model;
+
+use Depa\Core\DataModel as DataModel;
 
 class AttributeObjectApi extends AttributeObjectAbstract
 {
@@ -24,7 +24,7 @@ class AttributeObjectApi extends AttributeObjectAbstract
     {
         if (self::$instance === NULL)
         {
-            self::$instance = new Model\Eav\Resource\AttributeObjectApi();
+            self::$instance = new DataModel\Eav\Resource\AttributeObjectApi(); 
         }
         return self::$instance;
     }
@@ -35,9 +35,9 @@ class AttributeObjectApi extends AttributeObjectAbstract
      * @param Core_Eav_AttributeHandler $object
      * @return Ambigous <multitype:, multitype:mixed Ambigous <string, boolean, mixed> >
      */
-    public function loadAttributes (Model\EavAttributeHandler $object)
+    public function loadAttributes (DataModel\EavAttributeHandler $object)
     {
-    	return Model\Eav\Resource\AttributeObjectDatabase::getInstance()->loadAttributes($object);
+    	return DataModel\Eav\Resource\AttributeObjectDatabase::getInstance()->loadAttributes($object);
     }
     
     /**
@@ -47,7 +47,7 @@ class AttributeObjectApi extends AttributeObjectAbstract
      * @param $entityId
      * @return mixed $result
      */
-    public function checkEntityId(Model\EavAttributeHandler $object, $entityId)
+    public function checkEntityId(DataModel\EavAttributeHandler $object, $entityId)
     {
     	if ($entityId != NULL)
     	{
@@ -65,7 +65,7 @@ class AttributeObjectApi extends AttributeObjectAbstract
      * @param Camesis_Core_Eav_AttributeHandler $object
      * @return array
      */
-    public function load (Model\EavAttributeHandler $object)
+    public function load (DataModel\EavAttributeHandler $object)
     {
     	$eavData = array();
     	$objectData = array();

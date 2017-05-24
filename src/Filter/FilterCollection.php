@@ -2,18 +2,23 @@
 namespace Depa\Core\Filter;
 
 
-class FilterCollection extends \Depa\Core\DataModel\Collection
+use Depa\Core\DataModel\Collection;
+
+class FilterCollection extends Collection
 {
-    protected $databaseConnection;
+    protected $adapter;
+    
+    
+    use DatabaseCollectionTrait;
     
     public function __construct($dbConnection)
     {
-        $this->databaseConnection = $dbConnection;
+        $this->adapter = $dbConnection;
     }
     
     public function loadByFilterableName($filterableName)
     {
-        $this->items = Resource\Database::getInstance($this->dbConnection)->loadAllFilters($filterableName);
+        $this->items = $this->loadAllFilters($filterableName);
         return $this;
     }
 }

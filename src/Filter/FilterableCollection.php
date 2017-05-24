@@ -1,6 +1,8 @@
 <?php
 namespace Depa\Core\Filter;
 
+use Depa\Core\DataModel\IdCollection;
+
 /**
  * Collection für Objekte mit Filterable-Trait.
  * 
@@ -9,7 +11,7 @@ namespace Depa\Core\Filter;
  * @author alex
  *
  */
-class FilterableCollection extends \Depa\Core\DataModel\IdCollection
+class FilterableCollection extends IdCollection
 {
     protected $itemIdArray;
     

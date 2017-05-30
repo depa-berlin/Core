@@ -2,7 +2,7 @@
 namespace Depa\Core\DataModel\ActiveRecord\Api;
 
 
-class Api extends \Core\Api\AbstractApi
+class Api extends \Depa\Core\Api\AbstractApi
 {
     /**
      * 
@@ -159,7 +159,7 @@ class Api extends \Core\Api\AbstractApi
         return $result;
     }
     
-    protected function setData(\Core\Model\ActiveRecord $record, $data)
+    protected function setData(\Depa\Core\DataModel\ActiveRecord $record, $data)
     {
         foreach ($data as $attribute => $value)
         {
@@ -171,7 +171,7 @@ class Api extends \Core\Api\AbstractApi
         }
     }
     
-    protected function getData(\Core\Model\ActiveRecord $record)
+    protected function getData(\Depa\Core\DataModel\ActiveRecord $record)
     {
         $result = array();
         foreach ($record->attributes as $attribute)

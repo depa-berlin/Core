@@ -133,10 +133,10 @@ trait DatabasePersistenceTrait
 	}
 	
 	/**
-	 * Gibt einen oder mehrere Records anhand von Bedingungen in Form eines assoziativen Arrays zurück.
+	 * Gibt einen ResultSet bestehend aus einem oder mehreren ActiveRecords anhand von Bedingungen zurück.
 	 * 
 	 * @param unknown $condition
-	 * @return \Core\Model\ActiveRecord\Ambigous
+	 * @return \Zend\Db\ResultSet\ResultSet \
 	 */
 	public static function findAll($condition)
 	{

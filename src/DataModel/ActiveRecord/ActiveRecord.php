@@ -111,6 +111,15 @@ class ActiveRecord extends AbstractRowGateway
         }
         return;
     }
+    /**
+     * Liefert eine Aussage darüber, ob der aktuelle ActivRecord in der Datenbank vorhanden ist
+     * 
+     * @return boolean
+     */
+    public function existsInDatabase()
+    {
+        return ($this->rowExistsInDatabase());
+    }
     
     public function save()
     {

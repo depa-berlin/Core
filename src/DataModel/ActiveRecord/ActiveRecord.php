@@ -146,6 +146,9 @@ class ActiveRecord extends AbstractRowGateway
             } else {
                 unset($this->dirtyAttributes[$attribute]);
             }
+            if (count($this->getRulesForAttribute($attribute)) == 0) {
+              unset($this->dirtyAttributes[$attribute]);
+            }
         }
         if ($this->dirtyAttributes) {
             return false;

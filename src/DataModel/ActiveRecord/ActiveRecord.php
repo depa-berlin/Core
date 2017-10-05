@@ -100,9 +100,6 @@ class ActiveRecord extends AbstractRowGateway
             throw new Exception('Undefined Attribute! Trying to set '.$name);
         }
         parent::__set($name, $value);
-        if (!in_array($name, $this->dirtyAttributes)) {
-            $this->dirtyAttributes[$name] = [];
-        }
         return;
     }
     /**

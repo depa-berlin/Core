@@ -15,7 +15,12 @@
         "zendframework/zend-db": "^2.8",
         "zendframework/zend-validator": "^2.8",
         "zendframework/zend-filter": "^2.7",
+<<<<<<< HEAD
         "zendframework/zend-paginator": "^2.7"
+=======
+        "zendframework/zend-diactoros": "^1.6",
+        "zendframework/zend-expressive-hal": "^0.4.2"
+>>>>>>> b9c4a336d7870c9b61a68d723c229690afdb2a0a
     },
     "autoload": {
         "psr-4": {

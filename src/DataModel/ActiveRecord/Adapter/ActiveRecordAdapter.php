@@ -52,7 +52,7 @@ class ActiveRecordAdapter implements AdapterInterface
     public function count()
     {
         // Gesamtzahl der Elemente in DB
-        return (forward_static_call([$this->activeClass,'getRecordCount'], $this->condition));
+        return (forward_static_call([$this->activeClass,'getRecordCount']));
     }
 }
 

@@ -10,7 +10,7 @@ namespace Depa\Core\Interfaces;
 interface Halable
 {
 
-    public function toHal();
+    public function toHal(\Zend\Diactoros\Uri $requestUri);
 }
 
 ?>

@@ -38,7 +38,7 @@ class ActiveRecordAdapter implements AdapterInterface
         
         // Resultset von ActiveRecord holen
         // offset ist das errechnete Element wo ich beginne (Seitenzahl * element je seite)
-        $resultSet = forward_static_call([$this->activeClass,'getRecords'], $offset, $itemCountPerPage);
+        $resultSet = forward_static_call([$this->activeRecord,'getRecords'], $offset, $itemCountPerPage);
         //muss iterator to array sein?
         return iterator_to_array($resultSet);
     }
@@ -52,7 +52,7 @@ class ActiveRecordAdapter implements AdapterInterface
     public function count()
     {
         // Gesamtzahl der Elemente in DB
-        return (forward_static_call([$this->activeClass,'getRecordCount']));
+        return (forward_static_call([$this->activeRecord,'getRecordCount']));
     }
 }
 

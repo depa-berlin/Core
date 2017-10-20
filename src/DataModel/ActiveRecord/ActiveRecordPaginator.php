@@ -4,6 +4,7 @@ namespace Depa\Core\DataModel\ActiveRecord;
 use Depa\Core\DataModel\ActiveRecord\ActiveRecord;
 use Depa\Core\DataModel\ActiveRecord\Adapter\ActiveRecordAdapter;
 use Depa\Core\Api\Hal;
+use Depa\Core\Interfaces\Halable;
 use Zend\Paginator\Paginator;
 use Zend\Diactoros\Uri;
 
@@ -12,7 +13,7 @@ use Zend\Diactoros\Uri;
  * @author fenrich
  *        
  */
-class ActiveRecordPaginator extends Paginator
+class ActiveRecordPaginator extends Paginator implements Halable
 {
 
     protected static $defaultItemCountPerPage = 1;

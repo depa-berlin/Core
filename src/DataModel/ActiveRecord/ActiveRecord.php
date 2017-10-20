@@ -1,9 +1,12 @@
 <?php
 namespace Depa\Core\DataModel\ActiveRecord;
 
+use Depa\Core\DataModel\ActiveRecord\DatabasePersistenceTrait;
+use Depa\Core\Api\Hal;
+use Depa\Core\Interfaces\Halable;
 use Zend\Db\RowGateway\AbstractRowGateway;
 use Zend\Db\Sql\Sql;
-use Depa\Core\DataModel\ActiveRecord\DatabasePersistenceTrait;
+use Zend\Diactoros\Uri;
 
 /**
  * Stellt einen ActiveRecord dar, erweitert die Funktionalität des RowGateways.
@@ -15,12 +18,14 @@ use Depa\Core\DataModel\ActiveRecord\DatabasePersistenceTrait;
  * (Patterns of Enterprise Application Architecture, Martin Fowler, P.160 - 163)
  *
  * @author alex
- *
+ *        
  */
-class ActiveRecord extends AbstractRowGateway
+class ActiveRecord extends AbstractRowGateway implements Halable
 {
+
     /**
      * Array mit Attributen der Klasse.
+     *
      * @var Array
      */
     public $attributes;
@@ -40,7 +45,7 @@ class ActiveRecord extends AbstractRowGateway
     protected $rules;
 
     protected $relations = [];
-
+    
     /**
      * Trait fügt statische Properties/Methoden hinzu, die benötigt werden um Records aus der DB zu lesen,
      * und Zugriff auf DBMS zu ermöglichen - zB Primary Keys.
@@ -54,9 +59,8 @@ class ActiveRecord extends AbstractRowGateway
      *
      * $record = ActiveRecord::find($primaryKeyValue)
      *
-     * @param string $adapter
+     * @param string $adapter            
      */
-
     public function __construct($adapter)
     {
         $configArray = static::loadConfig($this);
@@ -73,6 +77,7 @@ class ActiveRecord extends AbstractRowGateway
         $this->sql = new Sql($adapter, $this->table);
         $this->initialize();
     }
+
     /**
      * Fügt Attributsüberprüfung zu RowGateway hinzu.
      *
@@ -86,8 +91,9 @@ class ActiveRecord extends AbstractRowGateway
         if ($this->hasAttribute($name)) {
             return null;
         }
-        throw new Exception('Undefined Attribute! Trying to get '.get_called_class().' - '.$name);
+        throw new Exception('Undefined Attribute! Trying to get ' . get_called_class() . ' - ' . $name);
     }
+
     /**
      * Fügt Attributsüberprüfung zu RowGateway hinzu.
      *
@@ -96,12 +102,13 @@ class ActiveRecord extends AbstractRowGateway
      */
     public function __set($name, $value)
     {
-        if (!$this->hasAttribute($name)) {
-            throw new Exception('Undefined Attribute! Trying to set '.$name);
+        if (! $this->hasAttribute($name)) {
+            throw new Exception('Undefined Attribute! Trying to set ' . $name);
         }
         parent::__set($name, $value);
         return;
     }
+
     /**
      * Liefert eine Aussage darüber, ob der aktuelle ActivRecord in der Datenbank vorhanden ist
      *
@@ -117,7 +124,6 @@ class ActiveRecord extends AbstractRowGateway
         return $this->dirtyAttributes;
     }
 
-
     public function save()
     {
         foreach ($this->rules as $rule) {
@@ -132,19 +138,24 @@ class ActiveRecord extends AbstractRowGateway
             if ($rule['type'] === 'required') {
                 $rules = $this->getRulesForAttribute($attribute);
                 if (count($rules) > 0 && $this->validateAttribute($rules, $value) == false) {
-                    $this->dirtyAttributes[$attribute] =  ["rule" => $rule['type']];
+                    $this->dirtyAttributes[$attribute] = [
+                        "rule" => $rule['type']
+                    ];
                     continue;
                 }
             }
             if (isset($value) && $this->validateAttribute($rule, $value) != true) {
-                  $this->dirtyAttributes[$attribute] =  ["rule" => $rule['type'], "value" => $value];
-                //Log::notice("save() fehlgeschlagen, Datensatz ungültig: {$attribute} - {$this->{$attribute}}");
+                $this->dirtyAttributes[$attribute] = [
+                    "rule" => $rule['type'],
+                    "value" => $value
+                ];
+                // Log::notice("save() fehlgeschlagen, Datensatz ungültig: {$attribute} - {$this->{$attribute}}");
                 continue;
             } else {
                 unset($this->dirtyAttributes[$attribute]);
             }
             if (count($this->getRulesForAttribute($attribute)) == 0) {
-              unset($this->dirtyAttributes[$attribute]);
+                unset($this->dirtyAttributes[$attribute]);
             }
         }
         if ($this->dirtyAttributes) {
@@ -156,7 +167,7 @@ class ActiveRecord extends AbstractRowGateway
     /**
      * Überprüft ob die Klasse ein bestimmtes Attribut besitzt.
      *
-     * @param string $name
+     * @param string $name            
      * @return boolean
      */
     public function hasAttribute($name)
@@ -170,8 +181,8 @@ class ActiveRecord extends AbstractRowGateway
     /**
      * Überprüft ob ein Attribut einer bestimmten Regel entspricht
      *
-     * @param string $type
-     * @param string $value
+     * @param string $type            
+     * @param string $value            
      * @return boolean
      */
     public function validateAttribute($rules, $value)
@@ -179,15 +190,17 @@ class ActiveRecord extends AbstractRowGateway
         if (count($rules) < 1) {
             throw new Exception('Missing rule/s to validate attribute!');
         }
-
+        
         if (array_key_exists('type', $rules)) {
-            $rules = [$rules];
+            $rules = [
+                $rules
+            ];
         }
         if (! isset(self::$_validator)) {
             self::$_validator = new Validator();
         }
         $valid = true;
-
+        
         foreach ($rules as $rule) {
             $options = [];
             if (isset($rule['options'])) {
@@ -203,8 +216,8 @@ class ActiveRecord extends AbstractRowGateway
     /**
      * Fügt Attributsüberprüfung zu RowGateway hinzu.
      *
-     * @param array $rowset
-     * @param bool $rowExistsInDatabase
+     * @param array $rowset            
+     * @param bool $rowExistsInDatabase            
      * @see \Zend\Db\RowGateway\AbstractRowGateway::populate()
      */
     public function populate(array $rowData, $rowExistsInDatabase = false)
@@ -214,14 +227,14 @@ class ActiveRecord extends AbstractRowGateway
             if ($this->hasAttribute($col)) {
                 $data[$col] = $val;
             } else {
-               // Log::notice('Attribute in row-set doesn\'t match known attributes: '.$col);
+                // Log::notice('Attribute in row-set doesn\'t match known attributes: '.$col);
             }
         }
         parent::populate($data, $rowExistsInDatabase);
         $relations = $this->relations;
         $this->relations = [];
         foreach ($relations as $relationName => $relation) {
-            if (!is_a ($relation, 'Depa\Core\DataModel\ActiveRecord\ActiveRelation')) {
+            if (! is_a($relation, 'Depa\Core\DataModel\ActiveRecord\ActiveRelation')) {
                 $this->relations[$relationName] = new ActiveRelation($this, $relation['model'], $relation['link'], $relation['relatedLink']);
             }
         }
@@ -230,7 +243,7 @@ class ActiveRecord extends AbstractRowGateway
     /**
      * Gibt die Regeln zu einem bestimmten Attribut zurück
      *
-     * @param unknown $attribute
+     * @param unknown $attribute            
      * @return multitype:unknown
      */
     public function getRulesForAttribute($attribute)
@@ -246,7 +259,6 @@ class ActiveRecord extends AbstractRowGateway
 
     /**
      * Lädt die config von ActiveRecord und dem DataPersistenceTrait
-     *
      */
     public static function loadConfig()
     {
@@ -256,7 +268,7 @@ class ActiveRecord extends AbstractRowGateway
         }
         $reflectionClass = new \ReflectionClass(get_called_class());
         $xmlFilePath = str_replace('.php', '.xml', $reflectionClass->getFileName());
-        if (!file_exists($xmlFilePath)) {
+        if (! file_exists($xmlFilePath)) {
             $config = $reflectionClass->getDefaultProperties();
             $configArray = [
                 'attributes' => $config['attributes'],
@@ -310,7 +322,7 @@ class ActiveRecord extends AbstractRowGateway
 
     public function getRelated($relationName)
     {
-        if (!array_key_exists($relationName, $this->relations)) {
+        if (! array_key_exists($relationName, $this->relations)) {
             return null;
         }
         $relation = $this->relations[$relationName];
@@ -319,10 +331,21 @@ class ActiveRecord extends AbstractRowGateway
 
     public function findRelated($relationName, $condition)
     {
-        if (!array_key_exists($this->relations, $relationName)) {
+        if (! array_key_exists($this->relations, $relationName)) {
             return null;
         }
         $relation = $this->relations[$relationName];
         return $relation->findAllRelated($condition);
+    }
+
+    public function toHal(Uri $requestUri)
+    {
+        $apiHal = new Hal();
+        $apiHal->addLink('self', $requestUri);
+        $apiHal->addElements($this->toArray());
+        if (isset($this->relations)) {
+            // TODO: Handling der Relations fehlt // Klärung des Problems, nur Darstellung, wenn gewünscht
+        }
+        return $apiHal->getHal();
     }
 }

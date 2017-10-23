@@ -37,14 +37,13 @@ class ActiveRecordPaginator extends Paginator implements Halable
         $this->_makeLink($apiHal, $requestUri);
         
         foreach ($this->getCurrentItems() as $record) {
-            
             // Query aus Uri entfernen
-            $requestUri = $requestUri->withQuery("");
+            $requestUriTmp = $requestUri->withQuery("");
             // Path mit ID ergänzen
-            $path = $requestUri->getPath();
-            $requestUri = $requestUri->withPath($path . "/" . $record->id);
+            $path = $requestUriTmp->getPath();
+            $requestUriTmp = $requestUriTmp->withPath($path . "/" . $record->id);
             
-            $apiHal->addEmbed((new \ReflectionClass($record))->getShortName(), $record->toHal($requestUri));
+            $apiHal->addEmbed((new \ReflectionClass($record))->getShortName(), $record->toHal($requestUriTmp));
         }
         
         return $apiHal->getHal();

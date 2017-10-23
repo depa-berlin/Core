@@ -58,7 +58,9 @@ class ActiveRecordPaginator extends Paginator implements Halable
         $newQueryArray = array();
         foreach ($queryArray as $key => $value) {
             if (stripos($value, 'page') === FALSE) {
-                $newQueryArray[] = $value;
+                if (! empty($value)) {
+                    $newQueryArray[] = $value;
+                }
             }
         }
         
@@ -67,14 +69,14 @@ class ActiveRecordPaginator extends Paginator implements Halable
         $pageCount = $this->count();
         $apiHal->addLink('self', $this->_makeUri($requestUri, $newQueryArray, 'page=' . $currentPageNumber));
         $apiHal->addLink('first', $this->_makeUri($requestUri, $newQueryArray, 'page=1'));
-        $apiHal->addLink('last', $this->_makeUri($requestUri, $newQueryArray, '?page=' . $pageCount));
+        $apiHal->addLink('last', $this->_makeUri($requestUri, $newQueryArray, 'page=' . $pageCount));
         // Previous and next
         if ($currentPageNumber - 1 > 0) {
-            $apiHal->addLink('prev', $this->_makeUri($requestUri, $newQueryArray, '?page=' . ($currentPageNumber - 1)));
+            $apiHal->addLink('prev', $this->_makeUri($requestUri, $newQueryArray, 'page=' . ($currentPageNumber - 1)));
         }
         
         if ($currentPageNumber + 1 <= $pageCount) {
-            $apiHal->addLink('next', $this->_makeUri($requestUri, $newQueryArray, '?page=' . ($currentPageNumber + 1)));
+            $apiHal->addLink('next', $this->_makeUri($requestUri, $newQueryArray, 'page=' . ($currentPageNumber + 1)));
         }
     }
 

@@ -17,13 +17,31 @@ class ActiveRecordAdapter implements AdapterInterface
      * @var \Core\Model\ActiveRecord
      */
     protected $activeRecord;
-
+    /**
+     * 
+     * @var array||NULL
+     */
     protected $conditions;
-
+    
+    /**
+     * 
+     * @param ActiveRecord $activeRecord
+     * @param array||NULL $conditions
+     */
     public function __construct(ActiveRecord $activeRecord, $conditions = NULL)
     {
         $this->activeRecord = $activeRecord;
-        $this->conditions = $conditions;
+        $conditionsTmp = NULL;
+        
+        if (! is_null($conditions)) {
+            $conditionsTmp = array();
+            foreach ($conditions as $key => $value) {
+                if ($activeRecord->hasAttribute($key)) {
+                    $conditionsTmp[$key] = $value;
+                }
+            }
+        }
+        $this->conditions = $conditionsTmp;
     }
 
     /**

@@ -18,7 +18,9 @@ class ActiveRecordAdapter implements AdapterInterface
      */
     protected $activeRecord;
 
-    public function __construct(ActiveRecord $activeRecord, $conditions = '')
+    protected $conditions;
+
+    public function __construct(ActiveRecord $activeRecord, $conditions = NULL)
     {
         $this->activeRecord = $activeRecord;
         $this->conditions = $conditions;
@@ -32,14 +34,18 @@ class ActiveRecordAdapter implements AdapterInterface
      * @param int $itemCountPerPage
      *            Number of items per page
      * @return array
+     * @see \Zend\Paginator\Adapter\AdapterInterface::getItems()
      */
     public function getItems($offset, $itemCountPerPage)
     {
-        
         // Resultset von ActiveRecord holen
         // offset ist das errechnete Element wo ich beginne (Seitenzahl * element je seite)
-        $resultSet = forward_static_call([$this->activeRecord,'getRecords'], $offset, $itemCountPerPage);
-        //muss iterator to array sein?
+        $resultSet = forward_static_call([
+            $this->activeRecord,
+            'getRecords'
+        ], $offset, $itemCountPerPage, $this->conditions);
+        // muss iterator to array sein?
+        
         return iterator_to_array($resultSet);
     }
 
@@ -52,7 +58,10 @@ class ActiveRecordAdapter implements AdapterInterface
     public function count()
     {
         // Gesamtzahl der Elemente in DB
-        return (forward_static_call([$this->activeRecord,'getRecordCount']));
+        return (forward_static_call([
+            $this->activeRecord,
+            'getRecordCount'
+        ], $this->conditions));
     }
 }
 

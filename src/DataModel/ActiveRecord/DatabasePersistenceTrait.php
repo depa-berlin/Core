@@ -169,23 +169,36 @@ trait DatabasePersistenceTrait
      * @param unknown $limit            
      * @return unknown
      */
-    public static function getRecords($offset = NULL, $limit = NULL)
+    public static function getRecords($offset = NULL, $limit = NULL, $condition = NULL)
     {
+        // $condition=['customer_id'=>1];
         if (! is_null($offset) || ! is_null($limit)) {
-            $rowset = static::getTable()->select(function (Select $select) use ($offset, $limit) {
+            $rowset = static::getTable()->select(function (Select $select) use ($offset, $limit, $condition) {
                 if (! is_null($offset)) {
                     $select->offset($offset);
                 }
                 if (! is_null($limit)) {
                     $select->limit($limit);
                 }
+                if (! is_null($condition)) {
+                    $select->where($condition);
+                }
             });
         } else {
-            $rowset = static::getTable()->select();
+            $rowset = static::getTable()->select(function (Select $select) use ($condition) {
+                if (! is_null($condition)) {
+                    $select->where($condition);
+                }
+            });
         }
         return $rowset;
     }
 
+    /**
+     *
+     * @param unknown $condition            
+     * @return mixed
+     */
     public static function getRecordCount($condition = NULL)
     {
         if (! static::isConfigLoaded()) {

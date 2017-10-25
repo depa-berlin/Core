@@ -16,7 +16,7 @@ use Zend\Diactoros\Uri;
 class ActiveRecordPaginator extends Paginator implements Halable
 {
 
-    protected static $defaultItemCountPerPage = 1;
+    protected static $defaultItemCountPerPage = 10;
 
     /**
      * Constructor.
@@ -24,12 +24,16 @@ class ActiveRecordPaginator extends Paginator implements Halable
      * @param AdapterInterface|AdapterAggregateInterface $adapter            
      * @throws Exception\InvalidArgumentException
      */
-    public function __construct(ActiveRecord $activeRecord)
+    public function __construct(ActiveRecord $activeRecord, $conditions = NULL)
     {
-        $adapter = new ActiveRecordAdapter($activeRecord);
+        $adapter = new ActiveRecordAdapter($activeRecord, $conditions);
         parent::__construct($adapter);
     }
-
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Depa\Core\Interfaces\Halable::toHal()
+     */
     public function toHal(Uri $requestUri)
     {
         $apiHal = new Hal();
@@ -49,6 +53,18 @@ class ActiveRecordPaginator extends Paginator implements Halable
         return $apiHal->getHal();
     }
 
+    /**
+     * Setzt den "default item count per page" nur neu, wenn dieser > 0.
+     *
+     * @param int $count            
+     */
+    public static function setDefaultItemCountPerPage($count)
+    {
+        if ((int) $count > 0) {
+            static::$defaultItemCountPerPage = (int) $count;
+        }
+    }
+
     protected function _makeLink($apiHal, Uri $requestUri)
     {
         $queryArray = explode('&', $requestUri->getQuery());
@@ -56,7 +72,8 @@ class ActiveRecordPaginator extends Paginator implements Halable
         // page Information aus QueryString entfernen
         $newQueryArray = array();
         foreach ($queryArray as $key => $value) {
-            if (stripos($value, 'page') === FALSE) {
+            // if (stripos($value, 'page') === FALSE) {
+            if ($value != 'page') {
                 if (! empty($value)) {
                     $newQueryArray[] = $value;
                 }
@@ -66,8 +83,12 @@ class ActiveRecordPaginator extends Paginator implements Halable
         $currentPageNumber = $this->getCurrentPageNumber();
         
         $pageCount = $this->count();
+        if ($pageCount == 0) {
+            $pageCount = 1;
+        }
         $apiHal->addLink('self', $this->_makeUri($requestUri, $newQueryArray, 'page=' . $currentPageNumber));
         $apiHal->addLink('first', $this->_makeUri($requestUri, $newQueryArray, 'page=1'));
+        
         $apiHal->addLink('last', $this->_makeUri($requestUri, $newQueryArray, 'page=' . $pageCount));
         // Previous and next
         if ($currentPageNumber - 1 > 0) {

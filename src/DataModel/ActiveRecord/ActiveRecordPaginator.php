@@ -17,6 +17,7 @@ class ActiveRecordPaginator extends Paginator implements Halable
 {
 
     protected static $defaultItemCountPerPage = 10;
+    
 
     /**
      * Constructor.
@@ -24,9 +25,9 @@ class ActiveRecordPaginator extends Paginator implements Halable
      * @param AdapterInterface|AdapterAggregateInterface $adapter            
      * @throws Exception\InvalidArgumentException
      */
-    public function __construct(ActiveRecord $activeRecord, $conditions = NULL)
+    public function __construct(ActiveRecord $activeRecord, $conditions = NULL, $sort = NULL)
     {
-        $adapter = new ActiveRecordAdapter($activeRecord, $conditions);
+        $adapter = new ActiveRecordAdapter($activeRecord, $conditions, $sort);
         parent::__construct($adapter);
     }
     /**
@@ -62,6 +63,17 @@ class ActiveRecordPaginator extends Paginator implements Halable
     {
         if ((int) $count > 0) {
             static::$defaultItemCountPerPage = (int) $count;
+        }
+    }
+   /**
+    * 
+    * @param array $sort
+    */
+    public function setItemSort($sort)
+    {
+        if (is_array($sort)&&count($sort)>0)
+        {
+        $this->getAdapter()->setSort($sort);
         }
     }
 

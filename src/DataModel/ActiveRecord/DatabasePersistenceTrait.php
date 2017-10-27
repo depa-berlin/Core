@@ -169,11 +169,11 @@ trait DatabasePersistenceTrait
      * @param unknown $limit            
      * @return unknown
      */
-    public static function getRecords($offset = NULL, $limit = NULL, $condition = NULL)
+    public static function getRecords($offset = NULL, $limit = NULL, $condition = NULL, $sort = NULL)
     {
         // $condition=['customer_id'=>1];
         if (! is_null($offset) || ! is_null($limit)) {
-            $rowset = static::getTable()->select(function (Select $select) use ($offset, $limit, $condition) {
+            $rowset = static::getTable()->select(function (Select $select) use ($offset, $limit, $condition, $sort) {
                 if (! is_null($offset)) {
                     $select->offset($offset);
                 }
@@ -182,6 +182,9 @@ trait DatabasePersistenceTrait
                 }
                 if (! is_null($condition)) {
                     $select->where($condition);
+                }
+                if (! is_null($sort)) {
+                    $select->order($sort);
                 }
             });
         } else {

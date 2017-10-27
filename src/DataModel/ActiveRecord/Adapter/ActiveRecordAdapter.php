@@ -17,18 +17,22 @@ class ActiveRecordAdapter implements AdapterInterface
      * @var \Core\Model\ActiveRecord
      */
     protected $activeRecord;
+
     /**
-     * 
+     *
      * @var array||NULL
      */
     protected $conditions;
-    
+
+    protected $sort;
+
     /**
-     * 
-     * @param ActiveRecord $activeRecord
-     * @param array||NULL $conditions
+     *
+     * @param ActiveRecord $activeRecord            
+     * @param array||NULL $conditions            
+     * @param unknown $sort            
      */
-    public function __construct(ActiveRecord $activeRecord, $conditions = NULL)
+    public function __construct(ActiveRecord $activeRecord, $conditions = NULL, $sort = NULL)
     {
         $this->activeRecord = $activeRecord;
         $conditionsTmp = NULL;
@@ -42,6 +46,8 @@ class ActiveRecordAdapter implements AdapterInterface
             }
         }
         $this->conditions = $conditionsTmp;
+        
+        $this->sort = $sort;
     }
 
     /**
@@ -61,7 +67,7 @@ class ActiveRecordAdapter implements AdapterInterface
         $resultSet = forward_static_call([
             $this->activeRecord,
             'getRecords'
-        ], $offset, $itemCountPerPage, $this->conditions);
+        ], $offset, $itemCountPerPage, $this->conditions, $this->sort);
         // muss iterator to array sein?
         
         return iterator_to_array($resultSet);
@@ -80,6 +86,11 @@ class ActiveRecordAdapter implements AdapterInterface
             $this->activeRecord,
             'getRecordCount'
         ], $this->conditions));
+    }
+
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
     }
 }
 

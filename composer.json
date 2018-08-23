@@ -12,12 +12,13 @@
     ],
     "require": {
         "php": ">=5.3",
-        "zendframework/zend-db": "^2.8",
         "zendframework/zend-validator": "^2.8",
         "zendframework/zend-filter": "^2.7",
         "zendframework/zend-paginator": "^2.7",
         "zendframework/zend-diactoros": "^1.6",
-        "zendframework/zend-expressive-hal": "^1.1"
+        "zendframework/zend-expressive-hal": "^1.1",
+        "zfcampus/zf-development-mode": "^3.2",
+        "zendframework/zend-db": "^2.9"
     },
     "autoload": {
         "psr-4": {
@@ -30,5 +31,8 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
+    },
+    "require-dev": {
+        "zendframework/zend-expressive-tooling": "^1.0"
     }
 }

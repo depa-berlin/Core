@@ -1,5 +1,5 @@
 <?php
-namespace Depa\Core\DataModel\ActiveRecord\Adapter;
+namespace Depa\Core\DataModel\ActiveRecord\Paginator\Adapter;
 
 use Zend\Paginator\Adapter\AdapterInterface;
 use Depa\Core\DataModel\ActiveRecord\ActiveRecord;
@@ -9,7 +9,7 @@ use Depa\Core\DataModel\ActiveRecord\ActiveRecord;
  * @author fenrich
  *        
  */
-class ActiveRecordAdapter implements AdapterInterface
+class ActiveRecord implements AdapterInterface
 {
 
     /**
@@ -49,6 +49,8 @@ class ActiveRecordAdapter implements AdapterInterface
         
         $this->sort = $sort;
     }
+    
+    
 
     /**
      * Returns an array of items for a page.
@@ -92,5 +94,7 @@ class ActiveRecordAdapter implements AdapterInterface
     {
         $this->sort = $sort;
     }
+    
+
 }
 

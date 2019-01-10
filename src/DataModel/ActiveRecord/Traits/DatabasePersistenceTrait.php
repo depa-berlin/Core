@@ -1,5 +1,5 @@
 <?php
-namespace Depa\Core\DataModel\ActiveRecord;
+namespace Depa\Core\DataModel\ActiveRecord\Traits;
 
 use Zend\Db\TableGateway\Feature\RowGatewayFeature;
 use Zend\Db\TableGateway\TableGateway;
@@ -216,7 +216,6 @@ trait DatabasePersistenceTrait
         }
         $adapter = static::getAdapter(get_called_class());
         $sql = new \Zend\Db\Sql\Sql($adapter);
-        $selectString = $sql->getSqlStringForSqlObject($select);
         $selectString = $sql->buildSqlString($select);
         $result = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $result->current()['recordcount'];

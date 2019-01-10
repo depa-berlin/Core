@@ -1,13 +1,13 @@
 <?php
 namespace Depa\Core\DataModel\ActiveRecord;
 
-use Depa\Core\DataModel\ActiveRecord\DatabasePersistenceTrait;
+use Depa\Core\DataModel\ActiveRecord\Traits\DatabasePersistenceTrait;
 use Depa\Core\Api\Hal;
 use Depa\Core\Interfaces\Halable;
 use Zend\Db\RowGateway\AbstractRowGateway;
 use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Uri;
-
+ 
 /**
  * Stellt einen ActiveRecord dar, erweitert die Funktionalität des RowGateways.
  * Jede Klasse die von ActiveRecord erbt muss ihre Attribute über public nicht-statische Properties bestimmen.

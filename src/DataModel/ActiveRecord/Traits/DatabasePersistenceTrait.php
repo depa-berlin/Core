@@ -6,6 +6,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
 use Zend\Db\Adapter\AdapterInterface;
 
+
 /**
  * Trait kümmert sich um Queries die ActiveRecord betreffen.
  * Zusätzlich werden einige nötige Parameter für das Arbeiten mit DBs definiert – zB. Table-Namen, Primary Keys.
@@ -96,31 +97,35 @@ trait DatabasePersistenceTrait
      * Gibt einen oder mehrere Records anhand von Bedingungen in Form eines assoziativen Arrays zurück.
      * Z.B. ('foo' => 'bar', 'qux' => 1)
      *
-     * @param array $condition            
+     * @param array|null $condition            
      * @param bool $single            
      * @return Ambigous <\Zend\Db\ResultSet\ResultSet, NULL, \Zend\Db\ResultSet\ResultSetInterface>
      */
-    protected static function findByCondition($condition, $single = false)
+    protected static function findByCondition($condition = NULL, $single = false)
     {
         $rowset = static::getTable()->select(function (Select $select) use ($condition, $single) {
-            $select->where($condition);
+            if (! is_null($condition)) {
+                $select->where($condition);
+            }
             if ($single == true) {
                 $select->limit(1);
             }
         });
+        
         return $rowset;
     }
 
     /**
-     * Gibt einen einzelnen Record anhand von Bedingungen in Form eines assoziativen Arrays oder einem Primary-Key zurück.
+     * Gibt einen einzelnen Record zurück
+     * Der Record wird anhand von Bedingungen in Form eines assoziativen Arrays oder einem Primary-Key ermittelt.
+     * Wird keine Bedingung angegeben, wird ein beliebiger Record zurückgegeben
      *
-     * @param unknown $attribute            
-     * @param unknown $value            
+     * @param unknown $condition
      * @return \Core\Model\ActiveRecord\Ambigous
-     */
-    public static function find($condition)
+     */ 
+    public static function find($condition = NULL)
     {
-        if (! is_array($condition) && count(self::getPrimaryKeys()) === 1) {
+        if (! is_null($condition) && ! is_array($condition) && count(self::getPrimaryKeys()) === 1) {
             $condition = array(
                 self::getPrimaryKeys()[0] => $condition
             );
@@ -131,13 +136,14 @@ trait DatabasePersistenceTrait
 
     /**
      * Gibt einen ResultSet bestehend aus einem oder mehreren ActiveRecords anhand von Bedingungen zurück.
+     * Wird keine Bedingung angegeben, werden alle Records zurückgegeben
      *
      * @param unknown $condition            
      * @return \Zend\Db\ResultSet\ResultSet \
      */
-    public static function findAll($condition)
+    public static function findAll($condition = NULL)
     {
-        return self::findByCondition($condition, false);
+        return iterator_to_array(self::findByCondition($condition, false));
     }
 
     /**

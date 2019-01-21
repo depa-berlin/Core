@@ -16,17 +16,7 @@ class ActiveRecordPaginator extends Paginator
     protected static $defaultItemCountPerPage = 10;
     
 
-    /**
-     * Constructor.
-     *
-     * @param AdapterInterface|AdapterAggregateInterface $adapter            
-     * @throws Exception\InvalidArgumentException
-     */
-    public function __construct(ActiveRecord $activeRecord, $conditions = NULL, $sort = NULL)
-    {
-        $adapter = new Adapter\ActiveRecord($activeRecord, $conditions, $sort);
-        parent::__construct($adapter);
-    }
+ 
 
 
     /**

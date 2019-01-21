@@ -9,7 +9,7 @@ use Depa\Core\DataModel\ActiveRecord\ActiveRecord;
  * @author fenrich
  *        
  */
-class ActiveRecord implements AdapterInterface
+class ActiveRecordAdapter implements AdapterInterface
 {
 
     /**
@@ -70,7 +70,7 @@ class ActiveRecord implements AdapterInterface
             $this->activeRecord,
             'getRecords'
         ], $offset, $itemCountPerPage, $this->conditions, $this->sort);
-        // muss iterator to array sein?
+       
         
         return iterator_to_array($resultSet);
     }

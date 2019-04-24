@@ -22,6 +22,19 @@ use Zend\Diactoros\Uri;
  */
 class ActiveRecord extends AbstractRowGateway implements Halable
 {
+    /**
+     * The name of the "created at" column.
+     *
+     * @var string
+     */
+    const CREATED_AT = 'created_at';
+    
+    /**
+     * The name of the "updated at" column.
+     *
+     * @var string
+     */
+    const UPDATED_AT = 'updated_at';
 
     /**
      * Array mit Attributen der Klasse.
@@ -108,7 +121,11 @@ class ActiveRecord extends AbstractRowGateway implements Halable
         parent::__set($name, $value);
         return;
     }
-
+public function exist()
+{
+    return $this->existsInDatabase();
+}
+    
     /**
      * Liefert eine Aussage darüber, ob der aktuelle ActivRecord in der Datenbank vorhanden ist
      *

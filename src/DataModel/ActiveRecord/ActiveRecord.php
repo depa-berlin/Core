@@ -27,14 +27,14 @@ class ActiveRecord extends AbstractRowGateway implements Halable
      *
      * @var string
      */
-    const CREATED_AT = 'created_at';
+    const CREATED = 'created';
     
     /**
      * The name of the "updated at" column.
      *
      * @var string
      */
-    const UPDATED_AT = 'updated_at';
+    const UPDATED = 'updated';
 
     /**
      * Array mit Attributen der Klasse.
@@ -64,7 +64,6 @@ class ActiveRecord extends AbstractRowGateway implements Halable
      * und Zugriff auf DBMS zu ermöglichen - zB Primary Keys.
      */
     use DatabasePersistenceTrait;
-
     /**
      * Konstruktor, erwartet einen DB-Adapter.
      * Beim initialisieren eines Records werden keine Daten aus der DB geladen–
@@ -83,6 +82,10 @@ class ActiveRecord extends AbstractRowGateway implements Halable
             $this->tablename = $configArray['tablename'];
             $this->primaryKeys = $configArray['primaryKeys'];
             $this->relations = $configArray['relations'];
+        }
+        if (isset($this->timestamps) && $this->timestamps==true) {
+            $this->attributes[] = static::UPDATED;
+            $this->attributes[] = static::CREATED;
         }
         static::setAdapter($adapter);
         $this->primaryKeyColumn = $this->getPrimaryKeys();
@@ -121,10 +124,6 @@ class ActiveRecord extends AbstractRowGateway implements Halable
         parent::__set($name, $value);
         return;
     }
-public function exist()
-{
-    return $this->existsInDatabase();
-}
     
     /**
      * Liefert eine Aussage darüber, ob der aktuelle ActivRecord in der Datenbank vorhanden ist
@@ -140,6 +139,7 @@ public function exist()
     {
         return $this->dirtyAttributes;
     }
+
 
     public function save()
     {
@@ -175,9 +175,16 @@ public function exist()
                 unset($this->dirtyAttributes[$attribute]);
             }
         }
+
         if ($this->dirtyAttributes) {
             return false;
         }
+
+        //Use trait Timestamp
+        if (isset($this->timestamps) && $this->timestamps==true) {
+            $this->updateTimestamps();
+        }
+
         return parent::save();
     }
 

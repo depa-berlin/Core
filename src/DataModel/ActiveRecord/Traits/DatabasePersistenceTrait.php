@@ -98,17 +98,21 @@ trait DatabasePersistenceTrait
      * Z.B. ('foo' => 'bar', 'qux' => 1)
      *
      * @param array|null $condition            
-     * @param bool $single            
+     * @param bool $single
+     * @param null|string|array $sort
      * @return Ambigous <\Zend\Db\ResultSet\ResultSet, NULL, \Zend\Db\ResultSet\ResultSetInterface>
      */
-    protected static function findByCondition($condition = NULL, $single = false)
+    protected static function findByCondition($condition = NULL, $single = false, $sort = NULL)
     {
-        $rowset = static::getTable()->select(function (Select $select) use ($condition, $single) {
+        $rowset = static::getTable()->select(function (Select $select) use ($condition, $single, $sort) {
             if (! is_null($condition)) {
                 $select->where($condition);
             }
             if ($single == true) {
                 $select->limit(1);
+            }
+            if (! is_null($sort)) {
+                $select->order($sort);
             }
         });
         
@@ -136,14 +140,16 @@ trait DatabasePersistenceTrait
 
     /**
      * Gibt einen ResultSet bestehend aus einem oder mehreren ActiveRecords anhand von Bedingungen zurück.
-     * Wird keine Bedingung angegeben, werden alle Records zurückgegeben
+     * Wird keine Bedingung angegeben, werden alle Records zurückgegeben.
+     * Das Ergebnis kann sortiert zurückgegeben werden.
      *
-     * @param unknown $condition            
+     * @param unknown $condition
+     * @param null|string|array $sort
      * @return \Zend\Db\ResultSet\ResultSet \
      */
-    public static function findAll($condition = NULL)
+    public static function findAll($condition = NULL, $sort = NULL)
     {
-        return iterator_to_array(self::findByCondition($condition, false));
+        return iterator_to_array(self::findByCondition($condition, false, $sort));
     }
 
     /**

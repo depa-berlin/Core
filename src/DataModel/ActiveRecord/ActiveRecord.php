@@ -58,6 +58,8 @@ class ActiveRecord extends AbstractRowGateway implements Halable
     protected $rules;
 
     protected $relations = [];
+
+    protected $isDirty = false;
     
     /**
      * Trait fügt statische Properties/Methoden hinzu, die benötigt werden um Records aus der DB zu lesen,
@@ -121,6 +123,10 @@ class ActiveRecord extends AbstractRowGateway implements Halable
         if (! $this->hasAttribute($name)) {
             throw new Exception('Undefined Attribute! Trying to set ' . $name);
         }
+
+        if($this->__get($name) != $value){
+            $this->setIsDirty(true);
+        }
         parent::__set($name, $value);
         return;
     }
@@ -180,10 +186,13 @@ class ActiveRecord extends AbstractRowGateway implements Halable
             return false;
         }
 
-        //Use trait Timestamp
-        if (isset($this->timestamps) && $this->timestamps==true) {
-            $this->updateTimestamps();
+        if($this->getIsDirty()){
+            //Use trait Timestamp
+            if (isset($this->timestamps) && $this->timestamps==true) {
+                $this->updateTimestamps();
+            }
         }
+
 
         return parent::save();
     }
@@ -371,5 +380,13 @@ class ActiveRecord extends AbstractRowGateway implements Halable
             // TODO: Handling der Relations fehlt // Klärung des Problems, nur Darstellung, wenn gewünscht
         }
         return $apiHal->getHal();
+    }
+
+    public function getIsDirty(){
+        return $this->isDirty;
+    }
+
+    public function setIsDirty($isDirty){
+        $this->isDirty = $isDirty;
     }
 }

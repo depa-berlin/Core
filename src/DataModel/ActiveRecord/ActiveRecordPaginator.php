@@ -5,8 +5,8 @@ use Depa\Core\DataModel\ActiveRecord\ActiveRecord;
 use Depa\Core\DataModel\ActiveRecord\Adapter\ActiveRecordAdapter;
 use Depa\Core\Api\Hal;
 use Depa\Core\Interfaces\Halable;
-use Zend\Paginator\Paginator;
-use Zend\Diactoros\Uri;
+use Laminas\Paginator\Paginator;
+use Laminas\Diactoros\Uri;
 
 /**
  *

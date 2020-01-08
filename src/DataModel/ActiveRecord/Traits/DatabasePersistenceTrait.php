@@ -1,10 +1,10 @@
 <?php
 namespace Depa\Core\DataModel\ActiveRecord\Traits;
 
-use Zend\Db\TableGateway\Feature\RowGatewayFeature;
-use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\Sql\Select;
-use Zend\Db\Adapter\AdapterInterface;
+use Laminas\Db\TableGateway\Feature\RowGatewayFeature;
+use Laminas\Db\TableGateway\TableGateway;
+use Laminas\Db\Sql\Select;
+use Laminas\Db\Adapter\AdapterInterface;
 
 
 /**
@@ -20,7 +20,7 @@ trait DatabasePersistenceTrait
     /**
      * TableGateway ist eine ZF-Klasse, erlaubt einfachen Zugriff auf Datenbanktabelle.
      *
-     * @var Zend\Db\TableGateway\TableGateway
+     * @var Laminas\Db\TableGateway\TableGateway
      */
     protected $tableGateway;
 
@@ -41,7 +41,7 @@ trait DatabasePersistenceTrait
     /**
      * Gibt den TableGateway für die Klasse, in der der Trait benutzt wird zurück und initialisiert den TableGateway gegenbenfalls.
      *
-     * @return \Zend\Db\TableGateway\TableGateway
+     * @return \Laminas\Db\TableGateway\TableGateway
      */
     protected $isConfigLoaded = false;
 
@@ -70,7 +70,7 @@ trait DatabasePersistenceTrait
     /**
      * Gibt den DB-Adapter zurück
      *
-     * @return Ambigous <\Zend\Db\Adapter\AdapterInterface, AdapterInterface>
+     * @return Ambigous <\Laminas\Db\Adapter\AdapterInterface, AdapterInterface>
      */
     public static function getAdapter()
     {
@@ -100,7 +100,7 @@ trait DatabasePersistenceTrait
      * @param array|null $condition            
      * @param bool $single
      * @param null|string|array $sort
-     * @return Ambigous <\Zend\Db\ResultSet\ResultSet, NULL, \Zend\Db\ResultSet\ResultSetInterface>
+     * @return Ambigous <\Laminas\Db\ResultSet\ResultSet, NULL, \Laminas\Db\ResultSet\ResultSetInterface>
      */
     protected static function findByCondition($condition = NULL, $single = false, $sort = NULL)
     {
@@ -145,7 +145,7 @@ trait DatabasePersistenceTrait
      *
      * @param unknown $condition
      * @param null|string|array $sort
-     * @return \Zend\Db\ResultSet\ResultSet \
+     * @return \Laminas\Db\ResultSet\ResultSet \
      */
     public static function findAll($condition = NULL, $sort = NULL)
     {
@@ -221,13 +221,13 @@ trait DatabasePersistenceTrait
         }
         $select = new Select();
         $select->from(static::$_configuration[get_called_class()]['tablename'])->columns([
-            'recordcount' => new \Zend\Db\Sql\Expression('COUNT(*)')
+            'recordcount' => new \Laminas\Db\Sql\Expression('COUNT(*)')
         ]);
         if ($condition !== NULL) {
             $select->where($condition);
         }
         $adapter = static::getAdapter(get_called_class());
-        $sql = new \Zend\Db\Sql\Sql($adapter);
+        $sql = new \Laminas\Db\Sql\Sql($adapter);
         $selectString = $sql->buildSqlString($select);
         $result = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $result->current()['recordcount'];

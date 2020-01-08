@@ -3,7 +3,7 @@ namespace Depa\Core\DataModel\ActiveRecord\Paginator;
 
 use Depa\Core\DataModel\ActiveRecord\ActiveRecord;
 use Depa\Core\DataModel\ActiveRecord\Paginator\Adapter;
-use Zend\Paginator\Paginator;
+use Laminas\Paginator\Paginator;
 
 /**
  *

@@ -4,9 +4,9 @@ namespace Depa\Core\DataModel\ActiveRecord;
 use Depa\Core\DataModel\ActiveRecord\Traits\DatabasePersistenceTrait;
 use Depa\Core\Api\Hal;
 use Depa\Core\Interfaces\Halable;
-use Zend\Db\RowGateway\AbstractRowGateway;
-use Zend\Db\Sql\Sql;
-use Zend\Diactoros\Uri;
+use Laminas\Db\RowGateway\AbstractRowGateway;
+use Laminas\Db\Sql\Sql;
+use Laminas\Diactoros\Uri;
  
 /**
  * Stellt einen ActiveRecord dar, erweitert die Funktionalität des RowGateways.
@@ -99,7 +99,7 @@ class ActiveRecord extends AbstractRowGateway implements Halable
     /**
      * Fügt Attributsüberprüfung zu RowGateway hinzu.
      *
-     * @see \Zend\Db\RowGateway\AbstractRowGateway::__get()
+     * @see \Laminas\Db\RowGateway\AbstractRowGateway::__get()
      */
     public function __get($name)
     {
@@ -116,7 +116,7 @@ class ActiveRecord extends AbstractRowGateway implements Halable
      * Fügt Attributsüberprüfung zu RowGateway hinzu.
      *
      *
-     * @see \Zend\Db\RowGateway\AbstractRowGateway::__set()
+     * @see \Laminas\Db\RowGateway\AbstractRowGateway::__set()
      */
     public function __set($name, $value)
     {
@@ -251,7 +251,7 @@ class ActiveRecord extends AbstractRowGateway implements Halable
      *
      * @param array $rowset            
      * @param bool $rowExistsInDatabase            
-     * @see \Zend\Db\RowGateway\AbstractRowGateway::populate()
+     * @see \Laminas\Db\RowGateway\AbstractRowGateway::populate()
      */
     public function populate(array $rowData, $rowExistsInDatabase = false)
     {

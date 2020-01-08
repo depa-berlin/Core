@@ -1,8 +1,8 @@
 <?php
 namespace Depa\Core\Api;
 
-use Zend\Expressive\Hal\HalResource;
-use Zend\Expressive\Hal\Link;
+use Mezzio\Hal\HalResource;
+use Mezzio\Hal\Link;
 
 /**
  *

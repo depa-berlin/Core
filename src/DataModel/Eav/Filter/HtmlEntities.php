@@ -7,7 +7,7 @@
  */
 namespace Depa\Core\DataModel\Eav\Filter;
 
-use Zend\Filter\StaticFilter;
+use Laminas\Filter\StaticFilter;
 
 class HtmlEntities
 {

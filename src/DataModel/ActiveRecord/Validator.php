@@ -15,10 +15,10 @@ class Validator
      * @var array
      */
     protected static $_validators = array(
-        'integer' => array('validator' => 'Zend\Validator\Between', 'options' => []),
-        'string' => array('validator' => 'Zend\Validator\StringLength', 'options' => []),
-        'required' => array('validator' => 'Zend\Validator\NotEmpty', 'options' => [\Zend\Validator\NotEmpty::NULL]),
-        'email' => array('validator' => 'Zend\Validator\EmailAddress', 'options' => [])
+        'integer' => array('validator' => 'Laminas\Validator\Between', 'options' => []),
+        'string' => array('validator' => 'Laminas\Validator\StringLength', 'options' => []),
+        'required' => array('validator' => 'Laminas\Validator\NotEmpty', 'options' => [\Laminas\Validator\NotEmpty::NULL]),
+        'email' => array('validator' => 'Laminas\Validator\EmailAddress', 'options' => [])
     );
     
     /**

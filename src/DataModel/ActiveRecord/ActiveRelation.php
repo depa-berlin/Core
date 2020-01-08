@@ -57,7 +57,7 @@ class ActiveRelation extends Relation
     protected function populateRelated()
     {
         $table = forward_static_call([$this->relatedModel, 'getTable']);
-        $rowset = $table->select(function (\Zend\Db\Sql\Select $select)
+        $rowset = $table->select(function (\Laminas\Db\Sql\Select $select)
         {
             $select->where([ $this->relatedLink => $this->primaryRecord->__get($this->link) ]);
             if ($this->multiple === false)

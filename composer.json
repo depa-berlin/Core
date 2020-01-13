@@ -39,6 +39,6 @@
 		}
 	},
 	"require-dev" : {
-		"zendframework/zend-expressive-tooling" : "^1.0"
+		"mezzio/mezzio-tooling": "^1.3"
 	}
 }
